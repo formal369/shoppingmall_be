@@ -86,7 +86,7 @@ productController.checkStock = async (item) => {
   // 사려는 아이템 qtyd와 재고 비교
   if (product.stock[item.size] < item.qty) {
     // 재고가 충분하지 않으면 불충분 메세지와 함께 해당 아이템 정보 리턴
-    return { isVerify: false, message: `${product.name}의 ${item.size} 사이즈 재고가 부족합니다. 현재 ${product.stock[item.size]}개 남았습니다.` };
+    return { isVerify: false, message: `${product.name}の${item.size}サイズの在庫が不足しています。現在${product.stock[item.size]}個残っています。` };
   }
   // 충분하다면, 재고에서 아이템 qty만큼 빼고 성공 메세지 리턴
   const newStock = { ...product.stock };

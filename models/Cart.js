@@ -23,7 +23,7 @@ const cartSchema = Schema({
       required: true
     }
   }]
-}, { timeStamps: true });
+}, { timestamps: true });
 
 cartSchema.methods.toJSON = function () {
   const obj = this._doc;

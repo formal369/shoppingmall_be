@@ -16,7 +16,8 @@ cartController.addItemToCart = async (req, res) => {
     // 카트에 이미 아이템이 있는지 확인하기
     const existItem = cart.items.find(item => item.productId.equals(productId) && item.size === size);
     if (existItem) {
-      throw new Error("아이템이 이미 카트에 있습니다.");
+      throw new Error("アイテムはすでにカートにあります。");
+
     }
     // 카트에 아이템 추가하기
     cart.items = [...cart.items, { productId, size, qty }];
@@ -69,9 +70,9 @@ cartController.editCartItem = async (req, res) => {
         model: 'Product',
       },
     });
-    if (!cart) throw new Error("카트가 없습니다.");
+    if (!cart) throw new Error("カートがありません。");
     const index = cart.items.findIndex((item) => item._id.equals(id));
-    if (index === -1) throw new Error("아이템이 없습니다.");
+    if (index === -1) throw new Error("アイテムがありません。");
     cart.items[index].qty = qty;
     await cart.save();
     res.status(200).json({ status: "success", data: cart.items });
@@ -84,7 +85,7 @@ cartController.getCartQty = async (req, res) => {
   try {
     const { userId } = req;
     const cart = await Cart.findOne({ userId });
-    if (!cart) throw new Error("카트가 없습니다.");
+    if (!cart) throw new Error("カートがありません。");
     res.status(200).json({ status: "success", qty: cart.items.length });
   } catch (error) {
     res.status(400).json({ status: "fail", error: error.message });
