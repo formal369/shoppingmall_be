@@ -16,10 +16,11 @@ productController.createProduct = async (req, res) => {
 
 productController.getProducts = async (req, res) => {
   try {
-    const { page, name } = req.query;
-    // const condition = name ? { name: { $regex: name, $options: 'i' } } : {};
+    const { page, name, category } = req.query;
     const condition = {
-      isDeleted: false, ...name ? { name: { $regex: name, $options: 'i' } } : {}
+      isDeleted: false,
+      ...name ? { name: { $regex: name, $options: 'i' } } : {},
+      ...category ? { category: { $in: [category] } } : {},
     };
     let query = Product.find(condition);
     const response = { status: "success" }

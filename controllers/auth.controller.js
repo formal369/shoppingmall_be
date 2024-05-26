@@ -61,6 +61,7 @@ authController.authenticate = async (req, res, next) => {
       throw new Error("Token not found");
     }
     const token = tokenString.replace("Bearer ", "");
+    console.log('token', token);
     jwt.verify(token, JWT_SECRET_KEY, async (error, payload) => {
       if (error) throw new Error("Invalid Token");
       req.userId = payload._id;
