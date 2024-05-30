@@ -15,12 +15,21 @@ noticeController.createNotice = async (req, res) => {
 
 noticeController.getNotices = async (req, res) => {
   try {
-    const notices = await Notice.find({ isDeleted: false });
-    res.status(200).json({ status: "success", data: notices });
+    const { page = 1, limit = 10 } = req.query;
+    const notices = await Notice.find({ isDeleted: false })
+      .sort({ createdAt: -1 })
+      .skip((page - 1) * limit)
+      .limit(parseInt(limit));
+
+    const totalNotices = await Notice.countDocuments({ isDeleted: false });
+    const totalPageNum = Math.ceil(totalNotices / limit);
+
+    res.status(200).json({ status: "success", data: notices, totalPageNum });
   } catch (error) {
     res.status(400).json({ status: "fail", error: error.message });
   }
 };
+
 
 noticeController.updateNotice = async (req, res) => {
   try {
