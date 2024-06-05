@@ -16,7 +16,8 @@ reviewController.addReview = async (req, res) => {
 reviewController.getReviews = async (req, res) => {
   try {
     const { productId } = req.query;
-    const reviews = await Review.find({ productId }).populate('userId', 'username');
+    const reviews = await Review.find({ productId })
+      .populate('userId', 'name');
     res.status(200).json({ status: "success", data: reviews });
   } catch (error) {
     res.status(400).json({ status: "fail", error: error.message });
